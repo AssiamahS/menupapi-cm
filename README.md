@@ -1,8 +1,16 @@
-# 🔥 MenuPapi CM
+# MENUPAPI-CM (cm)
 
-**Real Claude.ai usage monitor with accurate 5-hour + weekly reset countdown.**
+A lightweight terminal monitor that shows your **Claude Code 5-hour reset timer** and utilization.
 
-Track your Claude Code token usage with a live terminal dashboard. Get real-time session reset timers — no more guessing when your limit refreshes.
+Unlike most monitors, this supports **REAL Claude web session reset data** by pulling:
+
+```
+https://claude.ai/api/organizations/{org_id}/usage
+```
+
+If cookies are missing, it runs instantly in **estimate mode**.
+
+---
 
 ## Install
 
@@ -10,87 +18,74 @@ Track your Claude Code token usage with a live terminal dashboard. Get real-time
 pip install menupapi-cm
 ```
 
-## Quick Start
+## Run
 
 ```bash
-# Launch the monitor (works immediately in estimate mode)
+cm
+```
+
+## Features
+
+- Shows real `five_hour.utilization` and `five_hour.resets_at`
+- Shows real `seven_day.utilization` and `seven_day.resets_at`
+- Works instantly without setup (estimate mode)
+- Optional "real mode" using cookie file
+- Includes `cm setup` and `cm doctor`
+
+## Usage
+
+```bash
+# Run monitor
 cm
 
-# Enable real Claude.ai API data (recommended)
+# Setup real usage mode
 cm setup
 
-# Check cookie health
+# Diagnose cookie + API access
 cm doctor
-
-# Show help
-cm help
 ```
 
-## What You Get
+## Enable REAL MODE (Claude Web API)
+
+Cookie stored here:
 
 ```
-✦ ✧ MENUPAPI CLAUDE MONITOR ✦ ✧
-💰 Tokens Used: ████████░░░░░░░░  12,450 / 19,000
-🕒 Last 47 messages          📌 Current session  34% used
-🧮 Tokens Remaining: 6,550   📨 Messages: 47
-🧠 Tokens Spent: 12,450      ⏱ Resets in 2h 41m  34% used
-                              📅 Weekly resets in 3d 3h  24% used
+~/.claude_cookie.txt
 ```
 
-## Setup (Real API Mode)
-
-By default, `cm` estimates reset times from local logs. To get **exact** reset countdown from Claude.ai:
+Permissions required:
 
 ```bash
-cm setup
+chmod 600 ~/.claude_cookie.txt
 ```
 
-This will prompt you to paste your Claude.ai cookie header. Here's how to get it:
+Example cookie file format (ONE line only):
 
-1. Open **https://claude.ai/settings/usage** in Chrome
-2. Open **DevTools** (`Cmd+Option+I`) → **Network** tab
-3. Click **"Refresh usage limits"** on the page
-4. In Network tab, click the request to `/api/organizations/.../usage`
-5. Go to **Headers** → **Request Headers** → copy the `cookie` value
-6. Paste it when `cm setup` prompts you
+```
+sessionKey=sk-ant-sid02-xxxxx; cf_clearance=xxxxx; lastActiveOrg=xxxxxxxx
+```
 
-### ⚠️ Cookie Expiration
+## Works Out The Box
 
-The `cf_clearance` token (Cloudflare) expires periodically. When it does, `cm` falls back to estimate mode automatically. Just re-run `cm setup` to refresh.
+This tool cannot auto-grab browser cookies safely.
+Auto-extracting cookies from Chrome would become malware-adjacent.
 
-### �� Cookie Security
+So the correct UX is:
 
-- Your cookie is stored locally at `~/.claude_cookie.txt`
-- File permissions are set to `600` (owner-only read/write)
-- **Never paste your cookie into GitHub issues or public channels**
-- The cookie is only sent to `claude.ai` API endpoints
+- `cm` runs immediately in estimate mode
+- `cm setup` enables real mode
+- `cm doctor` validates cookie + prints fix steps
 
-## Monitor Controls
+## Build + Publish (for maintainer)
 
-| Key | Action |
-|-----|--------|
-| `1` | Show last 3 sessions |
-| `2` | Show last 5 sessions |
-| `3` | Show last 10 sessions |
-| `T` | Toggle inline terminal |
-| `Q` | Quit |
+```bash
+# Build
+python3 -m build
 
-## Commands
+# Upload to PyPI
+python3 -m twine upload dist/*
+```
 
-| Command | Description |
-|---------|-------------|
-| `cm` | Launch live usage monitor |
-| `cm setup` | Install Claude.ai cookie for real API data |
-| `cm doctor` | Check cookie health + API connectivity |
-| `cm help` | Show help |
-| `cm version` | Show version |
+## Author
 
-## Requirements
-
-- Python 3.9+
-- macOS or Linux
-- Claude Code (for local usage data)
-
-## License
-
-MIT — by [Sylvester Assiamah](https://github.com/AssiamahS)
+**Sylvester Assiamah** — The Menu Papi
