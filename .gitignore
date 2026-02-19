@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+*.whl
+*.tar.gz
+.claude_cookie.txt
+*.log
+.env
+.venv/
+venv/
+.tox/
+.pytest_cache/
+.mypy_cache/

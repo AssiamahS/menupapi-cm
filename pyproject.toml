@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "menupapi-cm"
+version = "1.0.0"
+description = "MenuPapi Claude Monitor — Real Claude.ai usage tracking with accurate 5-hour + weekly reset countdown"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+  { name = "Sylvester Assiamah", email = "sylvesterassiamah105@gmail.com" }
+]
+keywords = [
+  "claude", "claude-code", "monitor", "usage", "tokens",
+  "terminal", "menubar", "menu-papi", "anthropic", "ai"
+]
+dependencies = [
+  "rich>=13.0.0",
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "License :: OSI Approved :: MIT License",
+  "Environment :: Console",
+  "Topic :: Utilities",
+  "Topic :: System :: Monitoring",
+  "Intended Audience :: Developers",
+  "Operating System :: MacOS",
+  "Operating System :: POSIX :: Linux",
+]
+
+[project.urls]
+Homepage = "https://github.com/AssiamahS/menupapi-cm"
+Repository = "https://github.com/AssiamahS/menupapi-cm"
+Issues = "https://github.com/AssiamahS/menupapi-cm/issues"
+
+[project.scripts]
+cm = "menupapi_cm.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["menupapi_cm*"]
