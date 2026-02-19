@@ -223,10 +223,22 @@ def render():
         seven = web.get("seven_day") or {}
         s_pct = normalize_utilization(five.get("utilization"))
         w_pct = normalize_utilization(seven.get("utilization"))
-        s_reset = format_reset_delta(five.get("resets_at"))
-        w_reset = format_reset_delta(seven.get("resets_at"))
-        session_str = f"\u23f1 Resets in {s_reset}  {s_pct}% used"
-        weekly_str = f"\U0001f4c5 Weekly resets in {w_reset}  {w_pct}% used"
+        s_resets_at = five.get("resets_at")
+        w_resets_at = seven.get("resets_at")
+        s_reset = format_reset_delta(s_resets_at)
+        w_reset = format_reset_delta(w_resets_at)
+
+        if s_resets_at and s_pct > 0:
+            session_str = f"\u23f1 Resets in {s_reset}  {s_pct}% used"
+        elif s_pct == 0:
+            session_str = "\u23f1 5h available  0% used (fresh session)"
+        else:
+            session_str = f"\u23f1 {s_pct}% used"
+
+        if w_resets_at:
+            weekly_str = f"\U0001f4c5 Weekly resets in {w_reset}  {w_pct}% used"
+        else:
+            weekly_str = f"\U0001f4c5 Weekly  {w_pct}% used"
         pct_int = s_pct
     else:
         session_str = "\u23f1 Estimate mode (run cm setup for real data)"

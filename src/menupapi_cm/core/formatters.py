@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 
 def format_reset_delta(resets_at_str):
     if not resets_at_str:
-        return "?"
+        return "fresh"
     try:
         reset_dt = datetime.fromisoformat(resets_at_str.replace("Z", "+00:00"))
         delta = reset_dt - datetime.now(timezone.utc)
